@@ -14,6 +14,10 @@ import {
 } from "react-router-dom"
 import AppContent from "../Components/AppContent"
 
+const SuitePageFileGroups = loadable(
+  () => import("./SuitePageFileGroups/SuiteFileGroups")
+)
+
 const SuitePageComparison = loadable(
   () => import("./SuitePageComparison/SuitePageComparison")
 )
@@ -24,8 +28,10 @@ const SuitePageComparisons = loadable(
 
 /* eslint-disable no-unused-vars */
 enum PageContentResource {
+  Files = "files",
   Comparisons = "comparisons"
 }
+
 /* eslint-enable no-unused-vars */
 
 const useTabs = () => {
@@ -69,6 +75,7 @@ const AppRouterSuite = () => {
           value={currentTabPath}
           onChange={(_, resource: PageContentResource) => changeTab(resource)}
         >
+          <Tab label="Arquivos" value={PageContentResource.Files} />
           <Tab label="Comparações" value={PageContentResource.Comparisons} />
         </Tabs>
       </Box>
@@ -83,7 +90,7 @@ const AppRouterSuite = () => {
         <Routes>
           <Route
             path={`${PageContentResource.Files}/*`}
-            element={<SuiteFileGroups />}
+            element={<SuitePageFileGroups />}
           />
           <Route
             path={`${PageContentResource.Comparisons}/*`}

@@ -44,7 +44,7 @@ class FileService {
 
   async find(id: string, options?: FindOneOptions<FileEntity>) {
     const file = await this.repository.findOne(id, options)
-    console.log({ id, file })
+
     if (!file) {
       throw new NotFound()
     }
