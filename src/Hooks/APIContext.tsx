@@ -1,9 +1,9 @@
 import axios from "axios"
 import { FC, useEffect, useMemo, useState } from "react"
 import { createContext } from "use-context-selector"
+import Loading from "../Components/Loading"
 import { APIHttp } from "../Services/API/APIHttp"
 import { apiServer } from "../Services/Server/APIServer"
-import Loading from "../Components/Loading"
 
 type IAPIContext = {
   http: APIHttp

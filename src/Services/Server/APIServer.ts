@@ -1,8 +1,9 @@
-import { createServer } from "miragejs"
+import { createServer, Response } from "miragejs"
 import { Server } from "miragejs/server"
 import initSql from "sql.js"
 import sqlWaswmURL from "sql.js/dist/sql-wasm.wasm?url"
 import { createConnection, getConnection } from "typeorm/browser"
+import { readBlobAsString } from "../Utils/readBlobAsString"
 import { ComparisonSchema } from "./entities/ComparisonSchema"
 import { FileGroupSchema } from "./entities/FileGroupSchema"
 import { FileSchema } from "./entities/FileSchema"
@@ -83,7 +84,7 @@ class APIServer {
           SuiteService.runComparisons(request.params.id)
         )
 
-        this.get("files", () => ComparisonService.repository.find())
+        this.get("files", () => FileService.list())
 
         this.get("files/:id", (_, request) =>
           FileService.find(request.params.id)
@@ -93,9 +94,16 @@ class APIServer {
           FileService.remove(request.params.id)
         )
 
-        this.get("files/:id/data", (_, request) =>
-          FileService.data(request.params.id)
-        )
+        this.get("files/:id/data", async (_, request) => {
+          const { file, blob } = await FileService.data(request.params.id)
+          return new Response(
+            200,
+            {
+              "Content-Type": file.mimetype
+            },
+            await readBlobAsString(blob)
+          )
+        })
 
         this.get("fileGroups/:id", (_, request) =>
           FileGroupService.find(request.params.id)

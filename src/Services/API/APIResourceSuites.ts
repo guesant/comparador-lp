@@ -19,12 +19,6 @@ export const CreateFileGroup = (http: APIHttp) => async (suiteId: string) => {
   return data
 }
 
-export const CreateCompareGroup =
-  (http: APIHttp) => async (suiteId: string) => {
-    const { data } = await http.post(`/suites/${suiteId}/compareGroups`)
-    return data
-  }
-
 export const FindById = (http: APIHttp) => async (suiteId: string) => {
   const { data } = await http.get(`/suites/${suiteId}`)
   return data

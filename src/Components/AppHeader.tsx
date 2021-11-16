@@ -23,12 +23,12 @@ const AppHeader: FC<IAppHeaderProps> = ({
     <AppBar position="sticky">
       <Toolbar
         sx={{
+          gap: 1,
+          width: "100%",
           display: "flex",
           flexWrap: "wrap",
-          gap: 1,
-          maxWidth: APP_CONTAINER_MAX_WIDTH,
           margin: "0 auto",
-          width: "100%"
+          maxWidth: APP_CONTAINER_MAX_WIDTH
         }}
       >
         {beforeTitle}

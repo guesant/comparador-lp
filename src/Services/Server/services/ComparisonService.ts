@@ -1,20 +1,10 @@
 import levenshtein from "fast-levenshtein"
 import { FindManyOptions, FindOneOptions, getRepository } from "typeorm"
+import { readBlobAsString } from "../../Utils/readBlobAsString"
 import { ComparisonSchema } from "../entities/ComparisonSchema"
 import { Comparison, ComparisonStatus } from "../models/Comparison"
 import { File } from "../models/File"
 import FileService from "./FileService"
-
-const readBlobAsString = (blob: Blob) =>
-  new Promise<string>((resolve) => {
-    const reader = new FileReader()
-
-    reader.onload = () => {
-      resolve(reader.result as string)
-    }
-
-    reader.readAsText(blob)
-  })
 
 class ComparisonService {
   get repository() {
@@ -31,7 +21,10 @@ class ComparisonService {
   }
 
   find(id: string, options?: FindOneOptions<Comparison>) {
-    return this.repository.findOne(id, options)
+    return this.repository.findOne(id, {
+      relations: ["firstFile", "secondFile"],
+      ...options
+    })
   }
 
   findWithFile(fileId: File["id"]) {

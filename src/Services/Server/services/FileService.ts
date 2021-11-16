@@ -13,6 +13,10 @@ class FileService {
     return getRepository<FileEntity>(FileSchema)
   }
 
+  async list(options?: FindManyOptions<FileEntity>) {
+    return this.repository.find(options)
+  }
+
   async listFromSuite(suiteId: string, options?: FindManyOptions<FileEntity>) {
     return this.repository.find({
       where: { suite: { id: suiteId } },
@@ -38,9 +42,9 @@ class FileService {
     return file
   }
 
-  async find(id: string, options?: FindOneOptions<File>) {
-    const file = await this.repository.findOne(id)
-
+  async find(id: string, options?: FindOneOptions<FileEntity>) {
+    const file = await this.repository.findOne(id, options)
+    console.log({ id, file })
     if (!file) {
       throw new NotFound()
     }

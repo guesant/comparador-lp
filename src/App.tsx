@@ -4,8 +4,8 @@ import Divider from "@mui/material/Divider"
 import Typography from "@mui/material/Typography"
 import { QueryClient, QueryClientProvider } from "react-query"
 import "./App.css"
-import { APIContextProvider } from "./Hooks/APIContext"
 import AppContent from "./Components/AppContent"
+import { APIContextProvider } from "./Hooks/APIContext"
 import { AppRouter } from "./Pages/AppRouter"
 
 const client = new QueryClient({

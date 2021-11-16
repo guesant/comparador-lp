@@ -1,5 +1,6 @@
 import { APIHttp } from "./APIHttp"
 
 export const FindById = (http: APIHttp) => async (comparisonId: string) => {
-  await http.delete(`/comparison/${comparisonId}`)
+  const { data } = await http.get(`/comparisons/${comparisonId}`)
+  return data
 }
