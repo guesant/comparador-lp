@@ -14,6 +14,11 @@ export const Create = (http: APIHttp) => async () => {
   return data
 }
 
+export const CreateFileGroup = (http: APIHttp) => async (suiteId: string) => {
+  const { data } = await http.post(`/suites/${suiteId}/fileGroups`)
+  return data
+}
+
 export const FindById = (http: APIHttp) => async (suiteId: string) => {
   const { data } = await http.get(`/suites/${suiteId}`)
   return data
@@ -21,5 +26,10 @@ export const FindById = (http: APIHttp) => async (suiteId: string) => {
 
 export const ListFiles = (http: APIHttp) => async (suiteId: string) => {
   const { data } = await http.get(`/suites/${suiteId}/files`)
+  return data
+}
+
+export const ListFileGroups = (http: APIHttp) => async (suiteId: string) => {
+  const { data } = await http.get(`/suites/${suiteId}/fileGroups`)
   return data
 }

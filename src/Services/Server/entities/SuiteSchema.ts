@@ -17,6 +17,16 @@ export const SuiteSchema = new EntitySchema<Suite>({
       target: "File",
       type: "one-to-many",
       inverseSide: "suite"
+    },
+    comparisons: {
+      target: "Comparison",
+      type: "one-to-many",
+      inverseSide: "suite"
+    },
+    fileGroups: {
+      target: "FileGroup",
+      type: "one-to-many",
+      inverseSide: "suite"
     }
   }
 })

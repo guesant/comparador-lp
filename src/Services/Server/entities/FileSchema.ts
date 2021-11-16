@@ -4,7 +4,6 @@ import { File } from "../models/File"
 export const FileSchema = new EntitySchema<File>({
   name: "File",
   tableName: "file",
-
   columns: {
     id: {
       primary: true,
@@ -26,6 +25,14 @@ export const FileSchema = new EntitySchema<File>({
       cascade: ["remove"],
       onDelete: "CASCADE",
       inverseSide: "suite",
+      joinColumn: true
+    },
+    fileGroup: {
+      target: "FileGroup",
+      type: "many-to-one",
+      cascade: ["remove"],
+      onDelete: "CASCADE",
+      inverseSide: "files",
       joinColumn: true
     }
   }

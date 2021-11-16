@@ -5,6 +5,8 @@ import StorageService from "../../StorageService"
 import { FileSchema } from "../entities/FileSchema"
 import { File as FileEntity } from "../models/File"
 import { FileGroup } from "../models/FileGroup"
+import ComparisonService from "./ComparisonService"
+import FileGroupService from "./FileGroupService"
 
 class FileService {
   get repository() {
@@ -53,9 +55,19 @@ class FileService {
   }
 
   async remove(id: string) {
+    await ComparisonService.removeWithFile(id)
     const file = await this.find(id)
     await this.repository.remove(file)
     await StorageService.remove(id)
+  }
+
+  async storeFiles(fileGroupId: string, files: File[]) {
+    const fileGroup = await FileGroupService.find(fileGroupId)
+    if (fileGroup) {
+      for (const file of files) {
+        await this.store(fileGroup, file)
+      }
+    }
   }
 }
 

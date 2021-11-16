@@ -3,8 +3,10 @@ import { Server } from "miragejs/server"
 import initSql from "sql.js"
 import sqlWaswmURL from "sql.js/dist/sql-wasm.wasm?url"
 import { createConnection, getConnection } from "typeorm/browser"
+import { FileGroupSchema } from "./entities/FileGroupSchema"
 import { FileSchema } from "./entities/FileSchema"
 import { SuiteSchema } from "./entities/SuiteSchema"
+import FileGroupService from "./services/FileGroupService"
 import FileService from "./services/FileService"
 import SuiteService from "./services/SuiteService"
 
@@ -30,7 +32,7 @@ class APIServer {
         synchronize: true,
         useLocalForage: true,
         location: "dbdata",
-        entities: [SuiteSchema, FileSchema]
+        entities: [SuiteSchema, FileSchema, FileGroupSchema]
       })
     }
   }
@@ -60,6 +62,13 @@ class APIServer {
         this.get("suites/:id/files", (_, request) =>
           FileService.listFromSuite(request.params.id)
         )
+        this.get("suites/:id/fileGroups", (_, request) =>
+          FileGroupService.listFromSuite(request.params.id)
+        )
+
+        this.post("suites/:id/fileGroups", (_, request) =>
+          FileGroupService.create(request.params.id)
+        )
 
         this.get("files", () => ComparisonService.repository.find())
 
@@ -74,6 +83,23 @@ class APIServer {
         this.get("files/:id/data", (_, request) =>
           FileService.data(request.params.id)
         )
+
+        this.get("fileGroups/:id", (_, request) =>
+          FileGroupService.find(request.params.id)
+        )
+        this.delete("fileGroups/:id", (_, request) =>
+          FileGroupService.remove(request.params.id)
+        )
+
+        this.post("fileGroups/:id/files", (_, request) => {
+          const formData = request.requestBody as unknown as FormData
+
+          const formDataFiles = Array.from(formData.keys())
+            .filter((i) => i.startsWith("file"))
+            .map((i) => formData.get(i) as File)
+
+          return FileService.storeFiles(request.params.id, formDataFiles)
+        })
       }
     })
   }
