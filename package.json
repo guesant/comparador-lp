@@ -1,0 +1,71 @@
+{
+  "name": "comparador-lp-frontend-react",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "lint": "eslint --fix --ext js,ts,tsx,jsx src",
+    "format": "npx prettier --write .",
+    "serve": "vite preview",
+    "prepare": "husky install"
+  },
+  "lint-staged": {
+    "**/*": [
+      "prettier --write --ignore-unknown ."
+    ]
+  },
+  "dependencies": {
+    "@emotion/react": "^11.5.0",
+    "@emotion/styled": "^11.3.0",
+    "@loadable/component": "^5.15.0",
+    "@mui/icons-material": "^5.1.0",
+    "@mui/material": "^5.1.0",
+    "@mui/x-data-grid": "^5.0.0-beta.7",
+    "axios": "^0.24.0",
+    "fast-levenshtein": "^3.0.0",
+    "immer": "^9.0.6",
+    "indexeddb-fs": "^1.2.5",
+    "libarchive.js": "^1.3.0",
+    "localforage": "^1.10.0",
+    "mime": "^3.0.0",
+    "miragejs": "^0.1.42",
+    "nanoid": "^3.1.30",
+    "react": "^17.0.0",
+    "react-dom": "^17.0.0",
+    "react-query": "^3.32.2",
+    "react-router": "^6.0.2",
+    "react-router-dom": "^6.0.2",
+    "react-window": "^1.8.6",
+    "scheduler": "^0.20.2",
+    "sql.js": "^1.6.2",
+    "throw.js": "^5.0.0",
+    "typeorm": "^0.2.40",
+    "use-context-selector": "^1.3.9"
+  },
+  "devDependencies": {
+    "@types/fast-levenshtein": "^0.0.2",
+    "@types/libarchive.js": "^1.3.0",
+    "@types/loadable__component": "^5.13.4",
+    "@types/mime": "^2.0.3",
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
+    "@types/react-window": "^1.8.5",
+    "@types/sql.js": "^1.4.3",
+    "@typescript-eslint/eslint-plugin": "^5.4.0",
+    "@typescript-eslint/parser": "^5.4.0",
+    "@vitejs/plugin-react": "^1.0.0",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.1.1",
+    "eslint-plugin-react": "^7.27.0",
+    "husky": "^7.0.4",
+    "lint-staged": "^12.0.2",
+    "prettier": "2.4.1",
+    "prettier-config-standard": "^4.0.0",
+    "typescript": "^4.3.2",
+    "vite": "^2.6.4"
+  }
+}
