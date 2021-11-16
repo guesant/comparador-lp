@@ -3,6 +3,7 @@ import { FC, useEffect, useMemo, useState } from "react"
 import { createContext } from "use-context-selector"
 import { APIHttp } from "../Services/API/APIHttp"
 import { apiServer } from "../Services/Server/APIServer"
+import Loading from "../Components/Loading"
 
 type IAPIContext = {
   http: APIHttp
@@ -23,7 +24,7 @@ export const APIContextProvider: FC = ({ children }) => {
   const http = useMemo(() => axios.create({ baseURL: "/api" }), [])
 
   if (!serverStarted) {
-    return null
+    return <Loading />
   }
 
   return <APIContext.Provider value={{ http }}>{children}</APIContext.Provider>

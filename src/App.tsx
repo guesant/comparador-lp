@@ -4,9 +4,9 @@ import Divider from "@mui/material/Divider"
 import Typography from "@mui/material/Typography"
 import { QueryClient, QueryClientProvider } from "react-query"
 import "./App.css"
-import { AppRouter } from "./Pages/AppRouter"
-import { APIContextProvider } from "./Components/APIContext"
+import { APIContextProvider } from "./Hooks/APIContext"
 import AppContent from "./Components/AppContent"
+import { AppRouter } from "./Pages/AppRouter"
 
 const client = new QueryClient({
   defaultOptions: { queries: { refetchOnWindowFocus: false } }
@@ -40,17 +40,26 @@ const App = () => (
             my: 1.25,
             display: "flex",
             flexWrap: "wrap",
+            userSelect: "none",
             alignItems: "center"
           }}
         >
           <Box sx={{ flex: 1 }}>
             <Typography>Criado por Gabriel R. Antunes</Typography>
           </Box>
+          <Box sx={{ width: 36, height: 36 }}>
+            <img
+              alt="Feito em Ji-Paraná, RO."
+              title="Feito em Ji-Paraná, RO."
+              src="https://raw.githubusercontent.com/guesant/assets/shared/jiparana-bg-white.svg"
+            />
+          </Box>
           <a href={(window as any).PROJECT_INFO.GITHUB}>
-            <Box sx={{ width: 24, height: 24 }}>
+            <Box sx={{ width: 26, height: 26 }}>
               <img
-                src="https://simpleicons.org/icons/github.svg"
                 alt="Repositório GitHub"
+                title="Repositório GitHub"
+                src="https://simpleicons.org/icons/github.svg"
               />
             </Box>
           </a>
