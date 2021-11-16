@@ -1,3 +1,4 @@
+import { Comparison } from "./Comparison"
 import { File } from "./File"
 import { FileGroup } from "./FileGroup"
 

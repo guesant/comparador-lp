@@ -19,6 +19,12 @@ export const CreateFileGroup = (http: APIHttp) => async (suiteId: string) => {
   return data
 }
 
+export const CreateCompareGroup =
+  (http: APIHttp) => async (suiteId: string) => {
+    const { data } = await http.post(`/suites/${suiteId}/compareGroups`)
+    return data
+  }
+
 export const FindById = (http: APIHttp) => async (suiteId: string) => {
   const { data } = await http.get(`/suites/${suiteId}`)
   return data
@@ -32,4 +38,17 @@ export const ListFiles = (http: APIHttp) => async (suiteId: string) => {
 export const ListFileGroups = (http: APIHttp) => async (suiteId: string) => {
   const { data } = await http.get(`/suites/${suiteId}/fileGroups`)
   return data
+}
+
+export const ListComparisons = (http: APIHttp) => async (suiteId: string) => {
+  const { data } = await http.get(`/suites/${suiteId}/comparisons`)
+  return data
+}
+
+export const RunComparisons = (http: APIHttp) => async (suiteId: string) => {
+  await http.post(`/suites/${suiteId}/comparisons/run`)
+}
+
+export const SyncComparisons = (http: APIHttp) => async (suiteId: string) => {
+  await http.post(`/suites/${suiteId}/comparisons/sync`)
 }
