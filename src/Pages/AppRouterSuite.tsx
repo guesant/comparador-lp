@@ -14,6 +14,10 @@ import {
 } from "react-router-dom"
 import AppContent from "../Components/AppContent"
 
+const SuitePageComparison = loadable(
+  () => import("./SuitePageComparison/SuitePageComparison")
+)
+
 const SuitePageComparisons = loadable(
   () => import("./SuitePageComparisons/SuitePageComparisons")
 )
@@ -71,8 +75,23 @@ const AppRouterSuite = () => {
       <AppContent>
         <Routes>
           <Route
+            path={`${PageContentResource.Comparisons}/:comparisonId`}
+            element={<SuitePageComparison />}
+          />
+        </Routes>
+
+        <Routes>
+          <Route
+            path={`${PageContentResource.Files}/*`}
+            element={<SuiteFileGroups />}
+          />
+          <Route
             path={`${PageContentResource.Comparisons}/*`}
             element={<SuitePageComparisons />}
+          />
+          <Route
+            path="*"
+            element={<Navigate to={PageContentResource.Files} />}
           />
         </Routes>
       </AppContent>

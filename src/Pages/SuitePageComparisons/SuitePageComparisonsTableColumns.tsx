@@ -1,4 +1,5 @@
 import { GridColDef, GridRowParams } from "@mui/x-data-grid"
+import SuitePageComparisonsTableColumnsActionView from "./SuitePageComparisonsTableColumnsActionView"
 
 const SuitePageComparisonsTableColumns: GridColDef[] = [
   { field: "id", headerName: "Comparação", width: 200 },
@@ -23,7 +24,16 @@ const SuitePageComparisonsTableColumns: GridColDef[] = [
     headerName: "Distância",
     width: 105,
     type: "number"
-  }
+  },
+
+  {
+    field: "actions",
+    headerName: "Ações",
+    type: "actions",
+    getActions: (params: GridRowParams) => [
+      <SuitePageComparisonsTableColumnsActionView params={params} key={0} />
+    ]
+  } as any
 ]
 
 export default SuitePageComparisonsTableColumns
