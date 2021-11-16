@@ -3,7 +3,9 @@ import { Server } from "miragejs/server"
 import initSql from "sql.js"
 import sqlWaswmURL from "sql.js/dist/sql-wasm.wasm?url"
 import { createConnection, getConnection } from "typeorm/browser"
+import { FileSchema } from "./entities/FileSchema"
 import { SuiteSchema } from "./entities/SuiteSchema"
+import FileService from "./services/FileService"
 import SuiteService from "./services/SuiteService"
 
 class APIServer {
@@ -28,7 +30,7 @@ class APIServer {
         synchronize: true,
         useLocalForage: true,
         location: "dbdata",
-        entities: [SuiteSchema]
+        entities: [SuiteSchema, FileSchema]
       })
     }
   }
@@ -53,6 +55,24 @@ class APIServer {
         this.post("suites", () => SuiteService.create())
         this.delete("suites/:id", (_, request) =>
           SuiteService.delete(request.params.id)
+        )
+
+        this.get("suites/:id/files", (_, request) =>
+          FileService.listFromSuite(request.params.id)
+        )
+
+        this.get("files", () => ComparisonService.repository.find())
+
+        this.get("files/:id", (_, request) =>
+          FileService.find(request.params.id)
+        )
+
+        this.delete("files/:id", (_, request) =>
+          FileService.remove(request.params.id)
+        )
+
+        this.get("files/:id/data", (_, request) =>
+          FileService.data(request.params.id)
         )
       }
     })

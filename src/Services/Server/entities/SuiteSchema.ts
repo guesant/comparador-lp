@@ -11,5 +11,12 @@ export const SuiteSchema = new EntitySchema<Suite>({
       length: 36,
       generated: "uuid"
     }
+  },
+  relations: {
+    files: {
+      target: "File",
+      type: "one-to-many",
+      inverseSide: "suite"
+    }
   }
 })

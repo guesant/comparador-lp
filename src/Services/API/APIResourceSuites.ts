@@ -18,3 +18,8 @@ export const FindById = (http: APIHttp) => async (suiteId: string) => {
   const { data } = await http.get(`/suites/${suiteId}`)
   return data
 }
+
+export const ListFiles = (http: APIHttp) => async (suiteId: string) => {
+  const { data } = await http.get(`/suites/${suiteId}/files`)
+  return data
+}
