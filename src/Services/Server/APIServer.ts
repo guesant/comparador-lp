@@ -3,6 +3,8 @@ import { Server } from "miragejs/server"
 import initSql from "sql.js"
 import sqlWaswmURL from "sql.js/dist/sql-wasm.wasm?url"
 import { createConnection, getConnection } from "typeorm/browser"
+import { SuiteSchema } from "./entities/SuiteSchema"
+import SuiteService from "./services/SuiteService"
 
 class APIServer {
   server: Server | null = null
@@ -26,7 +28,7 @@ class APIServer {
         synchronize: true,
         useLocalForage: true,
         location: "dbdata",
-        entities: []
+        entities: [SuiteSchema]
       })
     }
   }
@@ -43,6 +45,15 @@ class APIServer {
       routes() {
         this.timing = 0
         this.namespace = "api/"
+
+        this.get("suites", () => SuiteService.list())
+        this.get("suites/:id", (_, request) =>
+          SuiteService.find(request.params.id)
+        )
+        this.post("suites", () => SuiteService.create())
+        this.delete("suites/:id", (_, request) =>
+          SuiteService.delete(request.params.id)
+        )
       }
     })
   }
