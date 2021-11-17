@@ -18,6 +18,14 @@ const SuitePageFileGroups = loadable(
   () => import("./SuitePageFileGroups/SuiteFileGroups")
 )
 
+const SuitePageUploadFiles = loadable(
+  () => import("./SuitePageUploadFiles/SuitePageUploadFiles")
+)
+
+const SuitePageUploadFilesFromZip = loadable(
+  () => import("./SuitePageUploadFilesFromZip/SuitePageUploadFilesFromZip")
+)
+
 const SuitePageComparison = loadable(
   () => import("./SuitePageComparison/SuitePageComparison")
 )
@@ -81,6 +89,14 @@ const AppRouterSuite = () => {
       </Box>
       <AppContent>
         <Routes>
+          <Route
+            path={`${PageContentResource.Files}/upload`}
+            element={<SuitePageUploadFiles />}
+          />
+          <Route
+            path={`${PageContentResource.Files}/upload-zip`}
+            element={<SuitePageUploadFilesFromZip />}
+          />
           <Route
             path={`${PageContentResource.Comparisons}/:comparisonId`}
             element={<SuitePageComparison />}

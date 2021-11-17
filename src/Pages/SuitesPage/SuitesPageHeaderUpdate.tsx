@@ -27,12 +27,7 @@ const SuitesPageHeaderUpdate = () => {
   }, [refetch])
 
   return (
-    <IconButton
-      disabled={isDisabled}
-      color="inherit"
-      variant="outlined"
-      onClick={handleUpdate}
-    >
+    <IconButton color="inherit" disabled={isDisabled} onClick={handleUpdate}>
       <RefreshIcon />
     </IconButton>
   )

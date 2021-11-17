@@ -10,6 +10,8 @@ const PROJECT_INFO = {
 export default defineConfig({
   plugins: [react()],
   define: {
-    "window.PROJECT_INFO.GITHUB": JSON.stringify(PROJECT_INFO.GITHUB)
+    "window.PROJECT_INFO.GITHUB": JSON.stringify(PROJECT_INFO.GITHUB),
+    "process.env": JSON.stringify({}),
+    "process.platform": JSON.stringify("")
   }
 })
