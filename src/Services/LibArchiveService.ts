@@ -1,11 +1,8 @@
 import { Archive } from "libarchive.js"
-import workerURL from "libarchive.js/dist/worker-bundle.js?url"
 import { renameFile } from "./Utils/renameFile"
 import { strcmp } from "./Utils/strcmp"
 
-const workerUrl = window.location.origin + workerURL
-
-Archive.init({ workerUrl })
+Archive.init({ workerUrl: window.location.origin + "/worker-bundle.js" })
 
 class LibArchiveService {
   async list(file: File): Promise<{ filename: string }[]> {

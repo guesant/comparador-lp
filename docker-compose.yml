@@ -2,10 +2,18 @@ services:
   app:
     image: node:alpine
     restart: always
-    container_name: comparador-lp-react
-    command: [sh, -c, "npm install && npm run dev -- --host"]
+    container_name: comparador-lp-app
+    command: [sh, -c, 'su node -c "npm install && npm run dev"']
     volumes:
       - .:/code
     working_dir: /code
     ports:
-      - 3000:3000
+      - 1234:1234
+
+  build:
+    image: node:alpine
+    container_name: comparador-lp-build
+    command: [sh, -c, 'su node -c "npm install && npm run build"']
+    volumes:
+      - .:/code
+    working_dir: /code

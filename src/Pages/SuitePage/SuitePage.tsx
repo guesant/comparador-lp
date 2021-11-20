@@ -1,10 +1,13 @@
 import AppRouterSuite from "../AppRouterSuite"
+import SuitePageFallbacks from "./SuitePageFallbacks"
 import SuitePageHeader from "./SuitePageHeader"
 
 const SuitePage = () => (
   <div>
     <SuitePageHeader />
-    <AppRouterSuite />
+    <SuitePageFallbacks>
+      <AppRouterSuite />
+    </SuitePageFallbacks>
   </div>
 )
 

@@ -1,43 +1,35 @@
-import { NotFound } from "throw.js"
-import { FindOneOptions, getRepository } from "typeorm/browser"
+import { getRepository } from "typeorm/browser"
 import { combineDuo } from "../../Utils/combineDuo"
-import { SuiteSchema } from "../entities/SuiteSchema"
-import { ComparisonStatus } from "../models/Comparison"
-import { Suite } from "../models/Suite"
+import { ComparisonStatus } from "../ComparisonStatus"
+import { SuiteEntity } from "../entities/SuiteEntity"
 import ComparisonService from "./ComparisonService"
 import FileGroupService from "./FileGroupService"
 
 class SuiteService {
   get repository() {
-    return getRepository(SuiteSchema)
+    return getRepository(SuiteEntity)
   }
 
   async create() {
-    const suite = new Suite()
-    await this.repository.save(suite)
-    return suite
+    return this.repository.save({})
   }
 
   async list() {
     return this.repository.find()
   }
 
-  async find(id: string, options?: FindOneOptions<Suite>) {
-    const suite = await this.repository.findOne(id, options)
-
-    if (!suite) {
-      throw new NotFound(`suite '${id}' was not found`)
-    }
-
-    return suite
+  async find(id: string) {
+    return this.repository.findOne(id)
   }
 
   async delete(id: string) {
-    await this.repository.remove(await this.find(id))
+    const suite = await this.find(id)
+    suite && (await this.repository.remove(suite))
   }
 
   async syncComparisons(suiteId: string) {
     const fileGroups = await FileGroupService.listFromSuite(suiteId)
+
     const idCombinations = combineDuo(
       fileGroups.map(({ files }) => files.map(({ id }) => id))
     )
@@ -58,7 +50,8 @@ class SuiteService {
 
   async runComparisons(suiteId: string) {
     const comparisons = await ComparisonService.listFromSuite(suiteId, {
-      where: { status: ComparisonStatus.QUEUED }
+      where: { status: ComparisonStatus.QUEUED },
+      include: ["files"]
     })
 
     for (const comparison of comparisons) {

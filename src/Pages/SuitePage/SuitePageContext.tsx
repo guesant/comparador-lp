@@ -4,12 +4,13 @@ import { useParams } from "react-router-dom"
 import { createContext, useContextSelector } from "use-context-selector"
 import { APIContext } from "../../Hooks/APIContext"
 import {
+  FindById,
   ListComparisons,
   ListFileGroups
 } from "../../Services/API/APIResourceSuites"
 
 type ISuiteContext = {
-  suiteQuery: UseQueryResult<{ fileGroups: any[]; comparisons: any[] }>
+  suiteQuery: UseQueryResult<{ fileGroups: any[]; comparisons: any[] } | null>
 }
 
 export const SuitePageContext = createContext({} as ISuiteContext)
@@ -21,13 +22,19 @@ export const SuitePageContextProvider: FC = ({ children }) => {
   const id = params.id!
 
   const suiteQuery = useQuery([http, "suite", id], async () => {
-    const fileGroupsPromise = ListFileGroups(http)(id)
-    const comparisonsPromise = ListComparisons(http)(id)
+    const suite = await FindById(http)(id)
 
-    return {
-      fileGroups: await fileGroupsPromise,
-      comparisons: await comparisonsPromise
+    if (suite) {
+      const fileGroupsPromise = ListFileGroups(http)(id)
+      const comparisonsPromise = ListComparisons(http)(id)
+
+      return {
+        fileGroups: await fileGroupsPromise,
+        comparisons: await comparisonsPromise
+      }
     }
+
+    return null
   })
 
   return (

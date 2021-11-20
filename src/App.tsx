@@ -9,7 +9,7 @@ import { APIContextProvider } from "./Hooks/APIContext"
 import { AppRouter } from "./Pages/AppRouter"
 
 const client = new QueryClient({
-  defaultOptions: { queries: { refetchOnWindowFocus: false } }
+  defaultOptions: { queries: { refetchOnWindowFocus: false, retry: 0 } }
 })
 
 const App = () => (
@@ -54,7 +54,7 @@ const App = () => (
               src="https://raw.githubusercontent.com/guesant/assets/shared/jiparana-bg-white.svg"
             />
           </Box>
-          <a href={(window as any).PROJECT_INFO.GITHUB}>
+          <a href={process.env.PROJECT_INFO_GITHUB}>
             <Box sx={{ width: 26, height: 26 }}>
               <img
                 alt="Repositório GitHub"

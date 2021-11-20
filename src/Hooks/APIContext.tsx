@@ -16,7 +16,7 @@ export const APIContextProvider: FC = ({ children }) => {
 
   useEffect(() => {
     setServerStarted(false)
-    apiServer.startServer().then(() => {
+    apiServer.setup().then(() => {
       setServerStarted(true)
     })
   }, [apiServer])

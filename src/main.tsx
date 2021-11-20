@@ -1,7 +1,8 @@
+import "reflect-metadata"
+import "./globals.shim"
 import React from "react"
 import ReactDOM from "react-dom"
 import App from "./App"
-import "./globals.shim"
 
 ReactDOM.render(
   <React.StrictMode>

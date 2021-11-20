@@ -1,11 +1,10 @@
 import { getRepository } from "typeorm/browser"
-import { FileGroupSchema } from "../entities/FileGroupSchema"
-import { FileGroup } from "../models/FileGroup"
+import { FileGroupEntity } from "../entities/FileGroupEntity"
 import FileService from "./FileService"
 
 class FileGroupService {
   get repository() {
-    return getRepository<FileGroup>(FileGroupSchema)
+    return getRepository(FileGroupEntity)
   }
 
   async listFromSuite(suiteId: string) {
@@ -19,11 +18,11 @@ class FileGroupService {
     return this.repository.save({ suite: { id: suiteId } })
   }
 
-  async find(id: FileGroup["id"]) {
+  async find(id: string) {
     return this.repository.findOne(id, { relations: ["suite"] })
   }
 
-  async remove(id: FileGroup["id"]) {
+  async remove(id: string) {
     const fileGroup = await this.repository.findOne(id, {
       relations: ["files"]
     })
@@ -32,8 +31,7 @@ class FileGroupService {
       for (const file of fileGroup.files) {
         await FileService.remove(file.id)
       }
-
-      return this.repository.remove(fileGroup)
+      await this.repository.remove(fileGroup)
     }
 
     return {}
