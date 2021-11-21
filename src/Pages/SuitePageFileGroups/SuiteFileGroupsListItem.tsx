@@ -41,7 +41,6 @@ const SuiteFileGroupsListItem: FC<{ fileGroup: any }> = ({ fileGroup }) => {
         <ListItem button disableRipple onClick={handleClick}>
           <ListItemIcon>{open ? <ExpandLess /> : <ExpandMore />}</ListItemIcon>
           <ListItemText primary={fileGroup.id} />
-
           <ListItemSecondaryAction>
             <IconButton onClick={handleFileGroupDelete}>
               <DeleteIcon />

@@ -4,7 +4,7 @@ import StepSelectFilesListSelected from "./StepSelectFilesListSelected"
 
 const StepSelectFiles = () => {
   return (
-    <Box>
+    <Box sx={{ flex: "1 1" }}>
       <StepSelectFilesFileInput />
       <StepSelectFilesListSelected />
     </Box>

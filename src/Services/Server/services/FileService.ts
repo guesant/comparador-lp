@@ -1,6 +1,6 @@
 import mime from "mime/lite"
 import { NotFound } from "throw.js"
-import { getRepository } from "typeorm/browser"
+import { FindOneOptions, getRepository } from "typeorm/browser"
 import FileReaderService from "../../FileReaderService"
 import { FileEntity } from "../entities/FileEntity"
 import { FileGroupEntity } from "../entities/FileGroupEntity"
@@ -25,6 +25,7 @@ class FileService {
     const mimetype = mime.getType(filename) || "application/octet-stream"
 
     const data = await FileReaderService.readAsArrayBuffer(blob)
+
     const file = await this.repository.save({
       filename,
       mimetype,
@@ -32,11 +33,15 @@ class FileService {
       fileGroup: { id: fileGroup.id },
       suite: { id: fileGroup.suite.id }
     })
+
     return file
   }
 
-  async find(id: string) {
-    const file = await this.repository.findOne(id)
+  async find(id: string, options?: FindOneOptions<FileEntity>) {
+    const file = await this.repository.findOne(id, {
+      ...options,
+      select: ["id", "filename", "mimetype", ...(options?.select ?? [])]
+    })
 
     if (!file) {
       throw new NotFound()
@@ -46,7 +51,7 @@ class FileService {
   }
 
   async data(id: string) {
-    const file = await this.find(id)
+    const file = await this.find(id, { select: ["data"] })
     const blob = new File([file.data], file.filename, { type: file.mimetype })
     return { file, blob }
   }

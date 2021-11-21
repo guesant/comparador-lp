@@ -1,21 +1,25 @@
 import Box from "@mui/material/Box"
-import Divider from "@mui/material/Divider"
-import StepFilterContentActions from "./StepFilterContentActions"
+import StepFilterContentArchiveList from "./StepFilterContentArchiveList"
 import { StepFilterContentContextProvider } from "./StepFilterContentContext"
-import { StepFilterContentFilterInput } from "./StepFilterContentFilterInput"
-import { StepFilterContentList } from "./StepFilterContentList"
+import StepFilterContentSidebar from "./StepFilterContentSidebar"
 
 const StepFilterContent = () => {
   return (
-    <Box>
+    <>
       <StepFilterContentContextProvider>
-        <StepFilterContentFilterInput />
-        <Divider sx={{ my: 2 }} />
-        <StepFilterContentActions />
-        <Divider sx={{ my: 2 }} />
-        <StepFilterContentList />
+        <Box
+          sx={{
+            gap: 1,
+            flex: "1 1",
+            display: "grid",
+            gridTemplateColumns: "2fr 1fr"
+          }}
+        >
+          <StepFilterContentArchiveList />
+          <StepFilterContentSidebar />
+        </Box>
       </StepFilterContentContextProvider>
-    </Box>
+    </>
   )
 }
 

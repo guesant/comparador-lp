@@ -1,9 +1,9 @@
+import initSqlJs from "sql.js"
 import { createConnection, getConnection } from "typeorm/browser"
+import { ComparisonEntity } from "./entities/ComparisonEntity"
 import { FileEntity } from "./entities/FileEntity"
 import { FileGroupEntity } from "./entities/FileGroupEntity"
 import { SuiteEntity } from "./entities/SuiteEntity"
-import { ComparisonEntity } from "./entities/ComparisonEntity"
-import initSqlJs from "sql.js"
 
 class DatabaseService {
   get isConnected() {

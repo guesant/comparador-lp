@@ -12,6 +12,9 @@ import { createContext } from "use-context-selector"
 import { SelectedArchiveFile } from "./SelectedArchiveFile"
 
 type ISuitePageUploadFilesFromZipContext = {
+  isBusy: boolean
+  setIsBusy: Dispatch<SetStateAction<boolean>>
+
   selectedFiles: SelectedArchiveFile[]
   setSelectedFiles: Dispatch<SetStateAction<SelectedArchiveFile[]>>
 
@@ -31,6 +34,7 @@ export const SuitePageUploadFilesFromZipContext = createContext(
 export const SuitePageUploadFilesFromZipContextProvider: FC = ({
   children
 }) => {
+  const [isBusy, setIsBusy] = useState(false)
   const [selectedFiles, setSelectedFiles] = useState<SelectedArchiveFile[]>([])
 
   const selectedFilesSelectAllCallbacks = useRef(new Set<() => void>())
@@ -81,6 +85,8 @@ export const SuitePageUploadFilesFromZipContextProvider: FC = ({
   return (
     <SuitePageUploadFilesFromZipContext.Provider
       value={{
+        isBusy,
+        setIsBusy,
         removeFiles,
         selectedFiles,
         setSelectedFiles,

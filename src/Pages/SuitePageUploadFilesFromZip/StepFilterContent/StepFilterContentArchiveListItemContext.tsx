@@ -6,7 +6,7 @@ import LibArchive from "../../../Services/LibArchiveService"
 import { SelectedArchiveFile } from "../SelectedArchiveFile"
 import { SuitePageUploadFilesFromZipContext } from "../SuitePageUploadFilesFromZipContext"
 
-type IFileGroupFromZipFileListItemContext = {
+type IStepFilterContentArchiveListItemContext = {
   selectedFile: SelectedArchiveFile
   libArchiveQuery: UseQueryResult<{ filename: string }[]>
   patchSelectedFile: (
@@ -14,11 +14,11 @@ type IFileGroupFromZipFileListItemContext = {
   ) => void
 }
 
-export const StepFilterContentListItemContext = createContext(
-  {} as IFileGroupFromZipFileListItemContext
+export const StepFilterContentArchiveListItemContext = createContext(
+  {} as IStepFilterContentArchiveListItemContext
 )
 
-export const StepFilterContentListItemContextProvider: FC<{
+export const StepFilterContentArchiveListItemContextProvider: FC<{
   selectedFile: SelectedArchiveFile
 }> = ({ selectedFile, children }) => {
   const libArchiveQuery = useQuery(
@@ -38,10 +38,10 @@ export const StepFilterContentListItemContextProvider: FC<{
   )
 
   return (
-    <StepFilterContentListItemContext.Provider
+    <StepFilterContentArchiveListItemContext.Provider
       value={{ selectedFile, libArchiveQuery, patchSelectedFile }}
     >
       {children}
-    </StepFilterContentListItemContext.Provider>
+    </StepFilterContentArchiveListItemContext.Provider>
   )
 }

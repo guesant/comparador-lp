@@ -18,7 +18,7 @@ export class FileEntity {
   @Column()
   mimetype: string
 
-  @Column({ type: "blob" })
+  @Column({ type: "blob", select: false })
   data: ArrayBuffer
 
   @ManyToOne(() => FileGroupEntity, (fileGroup) => fileGroup.files)

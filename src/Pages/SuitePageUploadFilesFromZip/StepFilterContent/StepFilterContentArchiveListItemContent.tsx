@@ -4,15 +4,13 @@ import { useCallback, useEffect, useMemo } from "react"
 import { FixedSizeList } from "react-window"
 import { useContextSelector } from "use-context-selector"
 import { SuitePageUploadFilesFromZipContext } from "../SuitePageUploadFilesFromZipContext"
+import StepFilterContentArchiveListItemContentRow from "./StepFilterContentArchiveListItemContentRow"
+import { StepFilterContentArchiveListItemContext } from "./StepFilterContentArchiveListItemContext"
 import { StepFilterContentContext } from "./StepFilterContentContext"
-import { StepFilterContentListItemContentRow } from "./StepFilterContentListItemContentRow"
-import { StepFilterContentListItemContext } from "./StepFilterContentListItemContext"
 
-const useHandleSelectAllFilteredFiles = (filteredFiles: string[]) => {}
-
-export const StepFilterContentListItemContent = () => {
+const StepFilterContentArchiveListItemContent = () => {
   const libArchiveQuery = useContextSelector(
-    StepFilterContentListItemContext,
+    StepFilterContentArchiveListItemContext,
     ({ libArchiveQuery }) => libArchiveQuery
   )
 
@@ -32,7 +30,7 @@ export const StepFilterContentListItemContent = () => {
   )
 
   const patchSelectedFile = useContextSelector(
-    StepFilterContentListItemContext,
+    StepFilterContentArchiveListItemContext,
     ({ patchSelectedFile }) => patchSelectedFile
   )
 
@@ -58,28 +56,30 @@ export const StepFilterContentListItemContent = () => {
   }, [selectedFilesSelectAllCallbacks, handleSelectAllFilteredFiles])
 
   if (libArchiveQuery.isLoading) {
-    return <Box sx={{ my: 2 }}>Carregando...</Box>
+    return <Box sx={{ m: 2 }}>Carregando...</Box>
+  }
+
+  if (filteredFiles.length === 0) {
+    return (
+      <Box sx={{ m: 2 }}>
+        <Typography>- Vazio.</Typography>
+      </Box>
+    )
   }
 
   return (
     <>
-      {filteredFiles.length === 0 && (
-        <Box sx={{ my: 2 }}>
-          <Typography>- Vazio.</Typography>
-        </Box>
-      )}
-
-      {filteredFiles.length > 0 && (
-        <FixedSizeList
-          width="100%"
-          height={250}
-          itemSize={59}
-          itemData={filteredFiles}
-          itemCount={filteredFiles.length}
-        >
-          {StepFilterContentListItemContentRow}
-        </FixedSizeList>
-      )}
+      <FixedSizeList
+        width="100%"
+        height={230}
+        itemSize={59}
+        itemData={filteredFiles}
+        itemCount={filteredFiles.length}
+      >
+        {StepFilterContentArchiveListItemContentRow}
+      </FixedSizeList>
     </>
   )
 }
+
+export default StepFilterContentArchiveListItemContent

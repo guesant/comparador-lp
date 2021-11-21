@@ -7,16 +7,16 @@ import Typography from "@mui/material/Typography"
 import { Fragment, useCallback, useMemo } from "react"
 import { ListChildComponentProps } from "react-window"
 import { useContextSelector } from "use-context-selector"
-import { StepFilterContentListItemContext } from "./StepFilterContentListItemContext"
+import { StepFilterContentArchiveListItemContext } from "./StepFilterContentArchiveListItemContext"
 
-const useChecked = (filename: string) => {
+const useContentRowChecked = (filename: string) => {
   const sliceList = useContextSelector(
-    StepFilterContentListItemContext,
+    StepFilterContentArchiveListItemContext,
     ({ selectedFile: { sliceList } }) => sliceList
   )
 
   const patchSelectedFile = useContextSelector(
-    StepFilterContentListItemContext,
+    StepFilterContentArchiveListItemContext,
     ({ patchSelectedFile }) => patchSelectedFile
   )
 
@@ -40,20 +40,20 @@ const useChecked = (filename: string) => {
   return { isChecked, handleToggle }
 }
 
-export const StepFilterContentListItemContentRow = ({
+const StepFilterContentArchiveListItemContentRow = ({
   index,
   style,
   data
 }: ListChildComponentProps<{ filename: string }[]>) => {
   const { filename } = useMemo(() => data[index], [data, index])
-  const { isChecked, handleToggle } = useChecked(filename)
+  const { isChecked, handleToggle } = useContentRowChecked(filename)
 
   return (
     <div style={style}>
       <Fragment>
-        <ListItem onClick={handleToggle} button>
+        <ListItem onClick={handleToggle} button disableRipple>
           <ListItemIcon>
-            <Checkbox checked={isChecked} disableRipple edge="start" />
+            <Checkbox checked={isChecked} edge="start" />
           </ListItemIcon>
           <ListItemText>
             <Typography noWrap>{filename}</Typography>
@@ -64,3 +64,5 @@ export const StepFilterContentListItemContentRow = ({
     </div>
   )
 }
+
+export default StepFilterContentArchiveListItemContentRow

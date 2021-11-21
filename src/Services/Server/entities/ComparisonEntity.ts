@@ -5,8 +5,8 @@ import {
   PrimaryGeneratedColumn
 } from "typeorm/browser"
 import { ComparisonStatus } from "../ComparisonStatus"
-import { SuiteEntity } from "./SuiteEntity"
 import { FileEntity } from "./FileEntity"
+import { SuiteEntity } from "./SuiteEntity"
 
 @Entity("comparison")
 export class ComparisonEntity {

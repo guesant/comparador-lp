@@ -1,12 +1,12 @@
-import Box from "@mui/material/Box"
-import Button from "@mui/material/Button"
-import ButtonGroup from "@mui/material/ButtonGroup"
+import HighlightOffIcon from "@mui/icons-material/HighlightOff"
+import SelectAllIcon from "@mui/icons-material/SelectAll"
+import IconButton from "@mui/material/IconButton"
 import produce from "immer"
 import { useCallback } from "react"
 import { useContextSelector } from "use-context-selector"
 import { SuitePageUploadFilesFromZipContext } from "../SuitePageUploadFilesFromZipContext"
 
-const StepFilterContentActions = () => {
+const StepFilterContentSidebarActions = () => {
   const selectedFilesSelectAllCallbacks = useContextSelector(
     SuitePageUploadFilesFromZipContext,
     ({ selectedFilesSelectAllCallbacks }) => selectedFilesSelectAllCallbacks
@@ -36,15 +36,15 @@ const StepFilterContentActions = () => {
   }, [setSelectedFiles])
 
   return (
-    <Box sx={{ my: 2 }}>
-      <ButtonGroup fullWidth variant="outlined">
-        <Button onClick={handleSelectFiltered}>
-          Selecionar Arquivos Visíveis
-        </Button>
-        <Button onClick={handleClearSelection}>Limpar Seleção</Button>
-      </ButtonGroup>
-    </Box>
+    <>
+      <IconButton onClick={handleSelectFiltered}>
+        <SelectAllIcon />
+      </IconButton>
+      <IconButton onClick={handleClearSelection}>
+        <HighlightOffIcon />
+      </IconButton>
+    </>
   )
 }
 
-export default StepFilterContentActions
+export default StepFilterContentSidebarActions

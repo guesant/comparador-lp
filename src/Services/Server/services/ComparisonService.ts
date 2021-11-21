@@ -1,5 +1,5 @@
 import levenshtein from "fast-levenshtein"
-import { getRepository, FindManyOptions, FindOneOptions } from "typeorm/browser"
+import { FindManyOptions, FindOneOptions, getRepository } from "typeorm/browser"
 import FileReaderService from "../../FileReaderService"
 import { ComparisonStatus } from "../ComparisonStatus"
 import { ComparisonEntity } from "../entities/ComparisonEntity"

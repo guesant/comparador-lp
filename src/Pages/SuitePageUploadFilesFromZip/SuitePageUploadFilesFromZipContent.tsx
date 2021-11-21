@@ -9,7 +9,7 @@ import Divider from "@mui/material/Divider"
 import Step from "@mui/material/Step"
 import StepLabel from "@mui/material/StepLabel"
 import Stepper from "@mui/material/Stepper"
-import { useMemo, useState } from "react"
+import { useCallback, useMemo, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { useContextSelector } from "use-context-selector"
 import StepFilterContent from "./StepFilterContent/StepFilterContent"
@@ -48,19 +48,41 @@ const useSteps = () => {
 
 const SuitePageUploadFilesFromZipContent = () => {
   const navigate = useNavigate()
-  const handleClose = () => navigate("./..")
+
+  const isBusy = useContextSelector(
+    SuitePageUploadFilesFromZipContext,
+    ({ isBusy }) => isBusy
+  )
+
+  const handleClose = useCallback(
+    () => !isBusy && navigate("./.."),
+    [isBusy, navigate]
+  )
 
   const { stepCount, currentStep, handleBack, handleNext, canContinue } =
     useSteps()
 
   return (
-    <Dialog open={true} fullWidth={true} maxWidth={"md"} onClose={handleClose}>
+    <Dialog
+      open={true}
+      fullWidth={true}
+      maxWidth={"lg"}
+      PaperProps={{ sx: { height: "90vh" } }}
+      onClose={handleClose}
+    >
       <DialogTitle>Enviar Arquivo Compactado</DialogTitle>
 
-      <Divider sx={{ mb: 0.5 }} />
+      <Divider />
 
-      <DialogContent>
-        <Box sx={{ mb: 3 }}>
+      <DialogContent
+        sx={{
+          py: 0,
+          display: "flex",
+          flexDirection: "column",
+          overflow: "hidden"
+        }}
+      >
+        <Box sx={{ my: 2 }}>
           <Stepper activeStep={currentStep} alternativeLabel>
             {steps.map((label) => (
               <Step key={label}>
@@ -69,25 +91,28 @@ const SuitePageUploadFilesFromZipContent = () => {
             ))}
           </Stepper>
         </Box>
-        <Divider sx={{ my: 2 }} />
+        <Divider />
 
-        {currentStep === 0 && <StepSelectFiles />}
-        {currentStep === 1 && <StepFilterContent />}
-
-        <Divider sx={{ my: 2 }} />
+        <Box sx={{ my: 2, flex: "1 1", overflow: "hidden", display: "flex" }}>
+          {currentStep === 0 && <StepSelectFiles />}
+          {currentStep === 1 && <StepFilterContent />}
+        </Box>
       </DialogContent>
+      <Divider />
 
       <DialogActions>
         <Box sx={{ flex: 1 }}>
-          <Button onClick={handleClose}>Cancelar</Button>
+          <Button disabled={isBusy} onClick={handleClose}>
+            Cancelar
+          </Button>
         </Box>
 
-        <Button disabled={currentStep === 0} onClick={handleBack}>
+        <Button disabled={isBusy || currentStep === 0} onClick={handleBack}>
           Anterior
         </Button>
 
         {currentStep < stepCount - 1 && (
-          <Button disabled={!canContinue} onClick={handleNext}>
+          <Button disabled={isBusy || !canContinue} onClick={handleNext}>
             Próximo
           </Button>
         )}
